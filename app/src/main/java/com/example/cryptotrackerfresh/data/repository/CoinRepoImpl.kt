@@ -1,7 +1,6 @@
 package com.example.cryptotrackerfresh.data.repository
 
 import com.example.cryptotrackerfresh.data.remote.CoinApiService
-import com.example.cryptotrackerfresh.data.remote.dto.QuoteEntity
 import com.example.cryptotrackerfresh.data.remote.dto.TickerEntity
 import com.example.cryptotrackerfresh.domain.repository.CoinRepository
 import javax.inject.Inject

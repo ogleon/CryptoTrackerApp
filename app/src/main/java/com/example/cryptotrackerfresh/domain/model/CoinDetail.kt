@@ -1,6 +1,6 @@
 package com.example.cryptotrackerfresh.domain.model
 
-data class CoinDetail (
+data class CoinDetail(
     val last_updated: String,
     val id: String,
     val name: String,

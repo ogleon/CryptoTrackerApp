@@ -1,6 +1,5 @@
 package com.example.cryptotrackerfresh.presentation.coin_detail
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.CircularProgressIndicator
@@ -9,8 +8,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.R
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -33,17 +30,17 @@ fun CoinDetailScreen(
                         modifier = Modifier,
                         verticalArrangement = Arrangement.Center
                     ) {
-                    Text(text = coin.rank)
-                    Text(text = coin.symbol)
-                    Text(text = coin.name)
-                    Text(text = coin.price)
-                    Text(text = coin.marketCap)
+                        Text(text = coin.rank)
+                        Text(text = coin.symbol)
+                        Text(text = coin.name)
+                        Text(text = coin.price)
+                        Text(text = coin.marketCap)
 
-                 }
+                    }
                 }
             }
         }
-        if(state.error.isNotBlank()) {
+        if (state.error.isNotBlank()) {
             Text(
                 text = state.error,
                 color = MaterialTheme.colors.error,
@@ -54,7 +51,7 @@ fun CoinDetailScreen(
                     .align(Alignment.Center)
             )
         }
-        if(state.isLoading) {
+        if (state.isLoading) {
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
     }

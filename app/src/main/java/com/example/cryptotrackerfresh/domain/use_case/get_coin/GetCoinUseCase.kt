@@ -18,9 +18,9 @@ class GetCoinUseCase @Inject constructor(
             emit(Resource.Loading<CoinDetail>())
             val coin = repository.getCoinById(coinId)
             emit(Resource.Success<CoinDetail>(coin.toCoinDetail()))
-        } catch(e: HttpException) {
+        } catch (e: HttpException) {
             emit(Resource.Error<CoinDetail>(e.localizedMessage ?: "An unexpected error occured"))
-        } catch(e: IOException) {
+        } catch (e: IOException) {
             emit(Resource.Error<CoinDetail>("Couldn't reach server. Check your internet connection."))
         }
     }
