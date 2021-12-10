@@ -1,5 +1,6 @@
 package com.example.cryptotrackerfresh.presentation.coin_list
 
+import android.widget.SearchView
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,11 +27,12 @@ fun CoinListScreen(
 ) {
     val state = viewModel.state.value
     Box(modifier = Modifier.fillMaxSize()) {
+
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             this.items(state.coins) { coin ->
                 CoinListItem(
                     coin = coin,
-                    onItemClick = {
+                    onClick = {
                         navController.navigate(Screen.CoinDetailScreen.route + "/${coin.id}")
                     }
                 )
