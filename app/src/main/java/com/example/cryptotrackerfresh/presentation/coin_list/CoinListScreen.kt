@@ -1,6 +1,7 @@
 package com.example.cryptotrackerfresh.presentation.coin_list
 
-import android.widget.SearchView
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,9 +18,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import coil.annotation.ExperimentalCoilApi
 import com.example.cryptotrackerfresh.presentation.Screen
 import com.example.cryptotrackerfresh.presentation.coin_list.components.CoinListItem
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
+@ExperimentalCoilApi
+@RequiresApi(Build.VERSION_CODES.Q)
 @Composable
 fun CoinListScreen(
     navController: NavController,
@@ -53,4 +59,5 @@ fun CoinListScreen(
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
     }
+
 }
