@@ -1,6 +1,5 @@
 package com.example.cryptotrackerfresh.presentation.coin_list.components
 
-import android.annotation.SuppressLint
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
@@ -32,7 +31,6 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @RequiresApi(Build.VERSION_CODES.Q)
 @ExperimentalCoilApi
 @ExperimentalCoroutinesApi
-@SuppressLint("UnsafeDynamicallyLoadedCode")
 @Composable
 fun CoinListItem(
     coin: Coin,
@@ -41,7 +39,7 @@ fun CoinListItem(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(6.dp)
+            .padding(5.dp)
             .clickable { onClick.invoke(coin) }
             .wrapContentHeight(),
         shape = RoundedCornerShape(6.dp),
@@ -49,114 +47,134 @@ fun CoinListItem(
         elevation = 7.dp
     )
     {
-        Box {
-            Row(
+        Row(
+            modifier = Modifier
+                .wrapContentHeight()
+                .fillMaxWidth()
+                .padding(6.dp),
+            Arrangement.SpaceBetween,
+        ) {
+
+            val imageLoader = ImageLoader.Builder(LocalContext.current)
+                .componentRegistry {
+                    add(SvgDecoder(LocalContext.current))
+                }
+                .build()
+
+            Column(
                 modifier = Modifier
-                    .wrapContentHeight()
-                    .fillMaxWidth()
-                    .padding(6.dp),
-                Arrangement.SpaceBetween,
-            ) {
-                val imageLoader = ImageLoader.Builder(LocalContext.current)
-                    .componentRegistry {
-                        add(SvgDecoder(LocalContext.current))
-                    }
-                    .build()
+                    .wrapContentSize()
+                    .padding(end = 4.dp),
+                horizontalAlignment = Alignment.Start,
+                verticalArrangement = Arrangement.Center) {
 
-                Column(
-                    modifier = Modifier
+                CompositionLocalProvider(LocalImageLoader.provides(imageLoader)) {
+                    val painter =
+                        rememberImagePainter(Constants.IMG_URL + coin.name.lowercase() + "-" + coin.symbol.lowercase() + "-logo.svg?v=002")
+                    Image(
+                        painter = painter,
+                        contentDescription = "SVG Picture",
+                        modifier = Modifier
+                            .size(64.dp)
+                            .wrapContentSize(),
+                        contentScale = ContentScale.Fit,
+                        alignment = Alignment.CenterStart
+
+                    )
+                }
+            }
+
+            Column(modifier = Modifier.fillMaxWidth()) {
+
+                Row {
+                    Column(modifier = Modifier
                         .wrapContentSize(),
-                    horizontalAlignment = Alignment.Start) {
-
-                    Row(verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        CompositionLocalProvider(LocalImageLoader.provides(imageLoader)) {
-                            val painter =
-                                rememberImagePainter(Constants.IMG_URL + coin.symbol.lowercase() + ".svg")
-
-                            Image(
-                                painter = painter,
-                                contentDescription = "SVG Picture",
-                                modifier = Modifier
-                                    .size(64.dp),
-                                alignment = Alignment.CenterStart,
-                                contentScale = ContentScale.Crop
-                            )
-                        }
-
+                        horizontalAlignment = Alignment.Start,
+                        verticalArrangement = Arrangement.Center) {
                         Text(
                             text = coin.symbol,
                             modifier = Modifier
-                                .padding(start = 6.dp)
-                                .align(Alignment.Top),
+                                .padding(start = 4.dp),
+                            fontWeight = FontWeight.Bold)
+                    }
+                    Column(modifier = Modifier
+                        .wrapContentSize(),
+                        horizontalAlignment = Alignment.Start,
+                        verticalArrangement = Arrangement.Center) {
+                        Text(
+                            text = coin.name,
+                            modifier = Modifier
+                                .padding(start = 4.dp),
                             fontWeight = FontWeight.Bold,
-                        )
+                        color = Color.LightGray)
                     }
-
-                }
-
-                Column(modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.End) {
-
-                    Row {
+                    Column(modifier = Modifier
+                        .fillMaxWidth(),
+                        horizontalAlignment = Alignment.End,
+                        verticalArrangement = Arrangement.Center) {
                         Text(text = "$" + coin.price,
-                        modifier = Modifier.padding(4.dp))
+                            modifier = Modifier
+                                .padding(end = 4.dp))
                     }
-                    Row(horizontalArrangement = Arrangement.SpaceBetween) {
+                }
+                Row(modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 3.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically) {
 
-                        if (coin.percentChange1h.contains("-")) {
-                            Text(text = "1h: ")
-                            Text(text = coin.percentChange1h.plus("%"),
-                                modifier = Modifier
-                                    .padding(end = 4.dp),
-                                color = Color.Red)
-                        } else {
-                            Text(text = "1h: ")
-                            Text(text = coin.percentChange1h.plus("%"),
-                                modifier = Modifier
-                                    .padding(end = 4.dp),
-                                color = Color.Green)
-                        }
+                    if (coin.percentChange1h.contains("-")) {
+                        Text(text = "1h: ")
+                        Text(text = coin.percentChange1h.plus("%"),
+                            modifier = Modifier
+                                .padding(end = 4.dp),
+                            color = Color.Red)
+                    } else {
+                        Text(text = "1h: ")
+                        Text(text = coin.percentChange1h.plus("%"),
+                            modifier = Modifier
+                                .padding(end = 4.dp),
+                            color = Color.Green)
+                    }
 
-                        if (coin.percentChange24h.contains("-")) {
-                            Text(text = "24h: ")
+                    if (coin.percentChange24h.contains("-")) {
+                        Text(text = "24h: ")
 
-                            Text(text = coin.percentChange24h.plus("%"),
-                                modifier = Modifier
-                                    .padding(end = 4.dp),
-                                color = Color.Red)
-                        } else {
-                            Text(text = "24h: ")
+                        Text(text = coin.percentChange24h.plus("%"),
+                            modifier = Modifier
+                                .padding(end = 4.dp),
+                            color = Color.Red)
+                    } else {
+                        Text(text = "24h: ")
 
-                            Text(text = coin.percentChange24h.plus("%"),
-                                modifier = Modifier
-                                    .padding(end = 4.dp),
-                                color = Color.Green)
-                        }
+                        Text(text = coin.percentChange24h.plus("%"),
+                            modifier = Modifier
+                                .padding(end = 4.dp),
+                            color = Color.Green)
+                    }
 
-                        if (coin.percentChange7d.contains("-")) {
+                    if (coin.percentChange7d.contains("-")) {
 
-                            Text(text = "7d: ")
+                        Text(text = "7d: ")
 
-                            Text(text = coin.percentChange7d.plus("%"),
-                                modifier = Modifier
-                                    .padding(end = 4.dp),
-                                color = Color.Red)
-                        } else {
-                            Text(text = "7d: ")
+                        Text(text = coin.percentChange7d.plus("%"),
+                            modifier = Modifier
+                                .padding(end = 4.dp),
+                            color = Color.Red)
+                    } else {
+                        Text(text = "7d: ")
 
-                            Text(text = coin.percentChange7d.plus("%"),
-                                modifier = Modifier
-                                    .padding(end = 4.dp),
-                                color = Color.Green)
-                        }
-
+                        Text(text = coin.percentChange7d.plus("%"),
+                            modifier = Modifier
+                                .padding(end = 4.dp),
+                            color = Color.Green)
                     }
 
                 }
             }
-        }
 
+        }
     }
 }
+
+
