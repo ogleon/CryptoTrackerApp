@@ -15,10 +15,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.ImageLoader
@@ -31,6 +34,7 @@ import com.example.cryptotrackerfresh.R
 import com.example.cryptotrackerfresh.common.Constants
 import com.example.cryptotrackerfresh.domain.model.Coin
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+
 
 @ExperimentalAnimationApi
 @RequiresApi(Build.VERSION_CODES.Q)
@@ -55,7 +59,7 @@ fun CoinListItem(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(4.dp),
+                .padding(5.dp),
             Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -64,13 +68,13 @@ fun CoinListItem(
                 .componentRegistry {
                     add(SvgDecoder(LocalContext.current))
                 }
-                .error(R.drawable.ic_baseline_cloud_off_24)
+                .error(R.drawable.ic_no_image_found4)
                 .build()
 
             Column(
                 modifier = Modifier
                     .wrapContentSize()
-                    .padding(4.dp),
+                    .padding(5.dp),
                 horizontalAlignment = Alignment.Start,
                 verticalArrangement = Arrangement.Center) {
 
@@ -103,7 +107,7 @@ fun CoinListItem(
 
             Column(modifier = Modifier
                 .wrapContentSize()
-                .padding(4.dp),
+                .padding(5.dp),
                 horizontalAlignment = Alignment.Start) {
                 Text(
                     text = coin.symbol,
@@ -115,16 +119,35 @@ fun CoinListItem(
 
             Column(modifier = Modifier
                 .fillMaxWidth()
-                .padding(4.dp),
+                .padding(5.dp),
                 horizontalAlignment = Alignment.End) {
-                Text(text = "$" + coin.price)
 
-                if (coin.percentChange24h.contains("-")) {
-                    Text(text = coin.percentChange24h.plus("%"),
-                        color = colorResource(id = R.color.red))
-                } else {
-                    Text(text = coin.percentChange24h.plus("%"),
-                        color = colorResource(id = R.color.green))
+                Text(text = "$" + coin.price,
+                    color = colorResource(id = R.color.black))
+
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    if (coin.percentChange24h.contains("-")) {
+                        Text(text = coin.percentChange24h.removePrefix("-").plus("%"),
+                            color = colorResource(id = R.color.red))
+                        Image(imageVector = ImageVector.vectorResource(id = R.drawable.ic_triangle),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(16.dp)
+                                .padding(start = 4.dp, bottom = 2.dp)
+                                .rotate(180f)
+                                .wrapContentSize(),
+                            colorFilter = ColorFilter.tint(colorResource(id = R.color.red)))
+                    } else {
+                        Text(text = coin.percentChange24h.plus("%"),
+                            color = colorResource(id = R.color.green))
+                        Image(imageVector = ImageVector.vectorResource(id = R.drawable.ic_triangle),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(16.dp)
+                                .padding(start = 4.dp, bottom = 2.dp)
+                                .wrapContentSize(),
+                            colorFilter = ColorFilter.tint(colorResource(id = R.color.green)))
+                    }
                 }
             }
 
