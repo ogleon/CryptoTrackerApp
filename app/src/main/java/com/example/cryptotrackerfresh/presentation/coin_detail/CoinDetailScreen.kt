@@ -7,6 +7,7 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
@@ -40,9 +41,7 @@ fun CoinDetailScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .wrapContentHeight(),
-                        color = Color.Cyan)
-
-
+                            color = Color.Cyan)
 
 
                     }
@@ -62,7 +61,10 @@ fun CoinDetailScreen(
         )
     }
     if (state.isLoading) {
-        CircularProgressIndicator(modifier = Modifier
-            .fillMaxSize())
+
+        Box(Modifier.fillMaxSize(),
+            Alignment.Center) {
+            CircularProgressIndicator(Modifier.size(64.dp))
+        }
     }
 }
