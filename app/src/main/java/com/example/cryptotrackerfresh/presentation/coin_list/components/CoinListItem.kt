@@ -24,6 +24,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.ImageLoader
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.ImagePainter
@@ -114,7 +115,8 @@ fun CoinListItem(
                     color = colorResource(id = R.color.black),
                     fontWeight = FontWeight.Bold)
                 Text(text = coin.name,
-                    color = colorResource(R.color.gray))
+                    color = colorResource(R.color.gray),
+                    fontSize = 15.sp)
             }
 
             Column(modifier = Modifier
