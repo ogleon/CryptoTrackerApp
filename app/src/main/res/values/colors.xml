@@ -5,12 +5,12 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="black">#0b0d0e</color>
+    <color name="black">#0d0d0d</color>
     <color name="red">#cb3b38</color>
     <color name="green">#4cb05b</color>
     <color name="white">#FFFFFFFF</color>
     <color name="backgroundCard">#eae8e1</color>
     <color name="background">#f1f0eb</color>
-    <color name="gray">#5d605f</color>
+    <color name="gray">#4d4d4d</color>
 
 </resources>
