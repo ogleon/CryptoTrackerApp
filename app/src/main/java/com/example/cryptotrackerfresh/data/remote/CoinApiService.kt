@@ -22,5 +22,5 @@ interface CoinApiService {
 
 
     @GET("search/?c=currencies")
-    suspend fun getSearches(@Query("q") query: String): SearchResponse
+    suspend fun getSearches(@Query("q") query: String): TickerEntity
 }

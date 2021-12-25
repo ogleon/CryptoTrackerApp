@@ -1,6 +1,7 @@
 package com.example.cryptotrackerfresh.presentation.coin_list
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
@@ -8,8 +9,11 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -19,6 +23,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -26,7 +32,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.annotation.ExperimentalCoilApi
 import com.example.cryptotrackerfresh.R
+import com.example.cryptotrackerfresh.data.remote.CoinApiService
 import com.example.cryptotrackerfresh.presentation.Screen
+import com.example.cryptotrackerfresh.presentation.coin_detail.CoinDetailState
 import com.example.cryptotrackerfresh.presentation.coin_list.components.CoinListItem
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -37,12 +45,17 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @Composable
 fun CoinListScreen(
     navController: NavController,
+    coinApiService: CoinApiService,
     viewModel: CoinListViewModel = hiltViewModel(),
 ) {
     val state = viewModel.state.value
+    val stateSearch = viewModel.stateCoinSearch.value
+
     val (value, onValueChange) = remember { mutableStateOf("") }
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = Modifier
+        .background(colorResource(id = R.color.background))
+        .fillMaxSize()) {
 
         Column(modifier = Modifier.fillMaxSize()) {
 
@@ -60,11 +73,33 @@ fun CoinListScreen(
                             null,
                             tint = colorResource(id = R.color.gray))
                     },
+                    trailingIcon = {
+                        IconButton(onClick = {
+                            viewModel.goToCoinDetailScreen(navController, coinApiService, value)
+                        }) {
+                            Icon(
+                                imageVector = Icons.Filled.Done,
+                                contentDescription = ""
+                            )
+                        }
+                    },
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Search
+                    ),
+                    keyboardActions = KeyboardActions(
+                        onSearch = {
+                            // navController.navigate(Screen.CoinDetailScreen.route + "/${coin.id}")
+                            Log.d("clickedSearch", "clicked")
+                        }
+                    ),
                     modifier = Modifier
-                        .padding(10.dp)
+                        .height(80.dp)
+                        .padding(8.dp)
+                        .fillMaxWidth()
                         .background(colorResource(id = R.color.backgroundCard),
                             RoundedCornerShape(16.dp)),
-                    placeholder = { Text(text = "Bun") },
+                    placeholder = { Text(text = "Search coin.") },
                     colors = TextFieldDefaults.textFieldColors(
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent,
@@ -72,8 +107,6 @@ fun CoinListScreen(
                         cursorColor = Color.DarkGray
                     ))
             }
-
-
             LazyColumn(modifier = Modifier
                 .fillMaxSize()
                 .background(
@@ -108,4 +141,3 @@ fun CoinListScreen(
     }
 
 }
-

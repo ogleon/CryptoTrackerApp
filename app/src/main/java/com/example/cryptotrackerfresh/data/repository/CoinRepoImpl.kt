@@ -16,4 +16,8 @@ class CoinRepoImpl @Inject constructor(
     override suspend fun getCoinById(coinId: String): TickerEntity {
         return api.getTicker(coinId, "USD")
     }
+
+    override suspend fun getSearch(coinId: String) : TickerEntity {
+        return api.getSearches(coinId)
+    }
 }
