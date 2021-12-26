@@ -32,9 +32,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.annotation.ExperimentalCoilApi
 import com.example.cryptotrackerfresh.R
-import com.example.cryptotrackerfresh.data.remote.CoinApiService
 import com.example.cryptotrackerfresh.presentation.Screen
-import com.example.cryptotrackerfresh.presentation.coin_detail.CoinDetailState
 import com.example.cryptotrackerfresh.presentation.coin_list.components.CoinListItem
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -45,11 +43,9 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @Composable
 fun CoinListScreen(
     navController: NavController,
-    coinApiService: CoinApiService,
     viewModel: CoinListViewModel = hiltViewModel(),
 ) {
     val state = viewModel.state.value
-    val stateSearch = viewModel.stateCoinSearch.value
 
     val (value, onValueChange) = remember { mutableStateOf("") }
 
@@ -75,7 +71,20 @@ fun CoinListScreen(
                     },
                     trailingIcon = {
                         IconButton(onClick = {
-                            viewModel.goToCoinDetailScreen(navController, coinApiService, value)
+
+                            Log.d("tot", "You just clicked")
+                            Log.d("coin", value)
+
+                            val coinSearchEntry = state.coins.firstOrNull { coin ->
+                                Log.d("coinForEach", coin.symbol)
+                                coin.name == value.replaceFirstChar { it.uppercaseChar() }.trim() || coin.symbol == value.uppercase().trim()
+                            }
+
+                            if (coinSearchEntry != null) {
+                                navController.navigate(Screen.CoinDetailScreen.route + "/${coinSearchEntry.id}")
+                            }
+
+
                         }) {
                             Icon(
                                 imageVector = Icons.Filled.Done,
