@@ -36,7 +36,6 @@ import com.example.cryptotrackerfresh.common.Constants
 import com.example.cryptotrackerfresh.domain.model.Coin
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-
 @ExperimentalAnimationApi
 @RequiresApi(Build.VERSION_CODES.Q)
 @ExperimentalCoilApi

@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CoinDetailViewModel @Inject constructor(
     private val getCoinUseCase: GetCoinUseCase,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     private val _state = mutableStateOf(CoinDetailState())
@@ -36,7 +36,7 @@ class CoinDetailViewModel @Inject constructor(
                 }
                 is Resource.Error -> {
                     _state.value = CoinDetailState(
-                        error = result.message ?: "An unexpected error occured"
+                        error = result.message ?: "An unexpected error occurred"
                     )
                 }
                 is Resource.Loading -> {

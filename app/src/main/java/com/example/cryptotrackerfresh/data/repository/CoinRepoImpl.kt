@@ -6,7 +6,7 @@ import com.example.cryptotrackerfresh.domain.repository.CoinRepository
 import javax.inject.Inject
 
 class CoinRepoImpl @Inject constructor(
-    private val api: CoinApiService
+    private val api: CoinApiService,
 ) : CoinRepository {
 
     override suspend fun getCoins(): List<TickerEntity> {
@@ -17,7 +17,4 @@ class CoinRepoImpl @Inject constructor(
         return api.getTicker(coinId, "USD")
     }
 
-    override suspend fun getSearch(coinId: String) : TickerEntity {
-        return api.getSearches(coinId)
-    }
 }

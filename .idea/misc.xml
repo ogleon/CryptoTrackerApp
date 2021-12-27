@@ -7,7 +7,11 @@
         <entry key="app/src/main/res/drawable/baseline_image_not_supported_24.xml" value="0.30185185185185187" />
         <entry key="app/src/main/res/drawable/ic_baseline_cloud_off_24.xml" value="0.30185185185185187" />
         <entry key="app/src/main/res/drawable/ic_baseline_error_outline_24.xml" value="0.30185185185185187" />
+        <entry key="app/src/main/res/drawable/ic_error.xml" value="0.2515625" />
         <entry key="app/src/main/res/drawable/ic_iconmonstr_triangle_4.xml" value="0.3234375" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.2515625" />
+        <entry key="app/src/main/res/drawable/ic_no_image_found4.xml" value="0.2515625" />
+        <entry key="app/src/main/res/drawable/ic_triangle.xml" value="0.2515625" />
         <entry key="app/src/main/res/drawable/outline_image_not_supported_24.xml" value="0.30185185185185187" />
       </map>
     </option>

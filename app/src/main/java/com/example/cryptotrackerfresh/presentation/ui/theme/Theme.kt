@@ -6,6 +6,7 @@ import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import com.example.cryptotrackerfresh.R
 
 private val DarkColorPalette = darkColors(
@@ -15,7 +16,7 @@ private val DarkColorPalette = darkColors(
 
 private val LightColorPalette = lightColors(
     primary = Color(R.color.background),
-    background = Color.White
+    background = Color(R.color.backgroundCard)
 )
 
 @Composable

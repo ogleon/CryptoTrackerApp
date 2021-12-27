@@ -15,7 +15,4 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Theme.CryptoTrackerFresh.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="Theme.CryptoTrackerFresh.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

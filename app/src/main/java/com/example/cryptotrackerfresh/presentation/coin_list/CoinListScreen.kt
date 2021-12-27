@@ -72,18 +72,15 @@ fun CoinListScreen(
                     trailingIcon = {
                         IconButton(onClick = {
 
-                            Log.d("tot", "You just clicked")
-                            Log.d("coin", value)
-
                             val coinSearchEntry = state.coins.firstOrNull { coin ->
                                 Log.d("coinForEach", coin.symbol)
-                                coin.name == value.replaceFirstChar { it.uppercaseChar() }.trim() || coin.symbol == value.uppercase().trim()
+                                coin.name == value.replaceFirstChar { it.uppercaseChar() }
+                                    .trim() || coin.symbol == value.uppercase().trim()
                             }
 
                             if (coinSearchEntry != null) {
                                 navController.navigate(Screen.CoinDetailScreen.route + "/${coinSearchEntry.id}")
                             }
-
 
                         }) {
                             Icon(
@@ -98,8 +95,15 @@ fun CoinListScreen(
                     ),
                     keyboardActions = KeyboardActions(
                         onSearch = {
-                            // navController.navigate(Screen.CoinDetailScreen.route + "/${coin.id}")
-                            Log.d("clickedSearch", "clicked")
+                            val coinSearchEntry = state.coins.firstOrNull { coin ->
+                                Log.d("coinForEach", coin.symbol)
+                                coin.name == value.replaceFirstChar { it.uppercaseChar() }
+                                    .trim() || coin.symbol == value.uppercase().trim()
+                            }
+
+                            if (coinSearchEntry != null) {
+                                navController.navigate(Screen.CoinDetailScreen.route + "/${coinSearchEntry.id}")
+                            }
                         }
                     ),
                     modifier = Modifier
@@ -131,7 +135,6 @@ fun CoinListScreen(
                 }
             }
 
-
         }
         if (state.error.isNotBlank()) {
             Text(
@@ -148,5 +151,4 @@ fun CoinListScreen(
             CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
         }
     }
-
 }
