@@ -18,6 +18,7 @@ data class TickerEntity(
 )
 
 fun TickerEntity.toCoin(): Coin {
+
     return Coin(
         id = id,
         name = name,

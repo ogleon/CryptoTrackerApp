@@ -1,8 +1,8 @@
 package com.example.cryptotrackerfresh.presentation.coin_list.components
 
+import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -27,12 +27,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.ImageLoader
 import coil.annotation.ExperimentalCoilApi
-import coil.compose.ImagePainter
 import coil.compose.LocalImageLoader
 import coil.compose.rememberImagePainter
 import coil.decode.SvgDecoder
+import coil.request.CachePolicy
+import coil.request.ImageRequest
 import com.example.cryptotrackerfresh.R
 import com.example.cryptotrackerfresh.common.Constants
+import com.example.cryptotrackerfresh.data.remote.dto.TickerEntity
 import com.example.cryptotrackerfresh.domain.model.Coin
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -64,12 +66,13 @@ fun CoinListItem(
             verticalAlignment = Alignment.CenterVertically
         ) {
 
-            val imageLoader = ImageLoader.Builder(LocalContext.current)
-                .componentRegistry {
-                    add(SvgDecoder(LocalContext.current))
-                }
-                .error(R.drawable.ic_no_image_found4)
+            val imageLoader = getImageLoader(LocalContext.current)
+
+            val request = ImageRequest.Builder(LocalContext.current)
+                .data(Constants.IMG_URL + coin.name.lowercase() + "-" + coin.symbol.lowercase() + "-logo.svg?v=002")
+                .memoryCachePolicy(CachePolicy.DISABLED)
                 .build()
+            imageLoader.enqueue(request)
 
             Column(
                 modifier = Modifier
@@ -79,17 +82,14 @@ fun CoinListItem(
                 verticalArrangement = Arrangement.Center) {
 
                 CompositionLocalProvider(LocalImageLoader.provides(imageLoader)) {
-                    val painter =
-                        rememberImagePainter(Constants.IMG_URL + coin.name.lowercase() + "-" + coin.symbol.lowercase() + "-logo.svg?v=002")
 
-                    val state = painter.state
+                    val painter = rememberImagePainter(request = request)
+
                     Box(
                         contentAlignment = Alignment.Center,
                         modifier = Modifier.wrapContentSize()
                     ) {
-                        this@Column.AnimatedVisibility(visible = (state is ImagePainter.State.Loading)) {
-                            CircularProgressIndicator()
-                        }
+
                         Image(
                             painter = painter,
                             contentDescription = null,
@@ -156,5 +156,16 @@ fun CoinListItem(
     }
 }
 
+fun getImageLoader(context: Context): ImageLoader {
+    val imageLoader = ImageLoader.Builder(context)
+        .componentRegistry {
+            add(SvgDecoder(context))
+        }
+        .placeholder(R.drawable.ic_baseline_build_circle_24)
+        .error(R.drawable.ic_baseline_build_circle_24)
+        .build()
+
+    return imageLoader
+}
 
 

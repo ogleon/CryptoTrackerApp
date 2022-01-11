@@ -104,6 +104,17 @@ fun CoinListScreen(
                             if (coinSearchEntry != null) {
                                 navController.navigate(Screen.CoinDetailScreen.route + "/${coinSearchEntry.id}")
                             }
+                        },
+                        onDone = {
+                            val coinSearchEntry = state.coins.firstOrNull { coin ->
+                                Log.d("coinForEach", coin.symbol)
+                                coin.name == value.replaceFirstChar { it.uppercaseChar() }
+                                    .trim() || coin.symbol == value.uppercase().trim()
+                            }
+
+                            if (coinSearchEntry != null) {
+                                navController.navigate(Screen.CoinDetailScreen.route + "/${coinSearchEntry.id}")
+                            }
                         }
                     ),
                     modifier = Modifier
@@ -112,7 +123,7 @@ fun CoinListScreen(
                         .fillMaxWidth()
                         .background(colorResource(id = R.color.backgroundCard),
                             RoundedCornerShape(16.dp)),
-                    placeholder = { Text(text = "Search coin.") },
+                    placeholder = { Text(text = "Search coin") },
                     colors = TextFieldDefaults.textFieldColors(
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent,
