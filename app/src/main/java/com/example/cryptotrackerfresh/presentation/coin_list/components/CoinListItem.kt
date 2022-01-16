@@ -161,7 +161,6 @@ fun getImageLoader(context: Context): ImageLoader {
         .componentRegistry {
             add(SvgDecoder(context))
         }
-        .placeholder(R.drawable.ic_baseline_build_circle_24)
         .error(R.drawable.ic_baseline_build_circle_24)
         .build()
 
