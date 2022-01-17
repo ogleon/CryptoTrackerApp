@@ -1,5 +1,6 @@
 package com.example.cryptotrackerfresh.data.remote.dto
 
+import com.example.cryptotrackerfresh.common.Constants
 import com.example.cryptotrackerfresh.domain.model.Coin
 import com.example.cryptotrackerfresh.domain.model.CoinDetail
 
@@ -20,6 +21,7 @@ data class TickerEntity(
 fun TickerEntity.toCoin(): Coin {
 
     return Coin(
+        image = (Constants.IMG_URL + name.replace(" ", "-") + "-" + symbol + "-logo.svg?v=018").lowercase(),
         id = id,
         name = name,
         symbol = symbol,
@@ -32,6 +34,8 @@ fun TickerEntity.toCoin(): Coin {
 
 fun TickerEntity.toCoinDetail(): CoinDetail {
     return CoinDetail(
+
+        image = (Constants.IMG_URL + name.replace(" ", "-") + "-" + symbol + "-logo.svg?v=018").lowercase(),
         last_updated = last_updated.toString(),
         id = id,
         name = name,

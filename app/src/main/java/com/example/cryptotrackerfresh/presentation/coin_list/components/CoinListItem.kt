@@ -9,7 +9,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -33,8 +32,6 @@ import coil.decode.SvgDecoder
 import coil.request.CachePolicy
 import coil.request.ImageRequest
 import com.example.cryptotrackerfresh.R
-import com.example.cryptotrackerfresh.common.Constants
-import com.example.cryptotrackerfresh.data.remote.dto.TickerEntity
 import com.example.cryptotrackerfresh.domain.model.Coin
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
@@ -69,7 +66,7 @@ fun CoinListItem(
             val imageLoader = getImageLoader(LocalContext.current)
 
             val request = ImageRequest.Builder(LocalContext.current)
-                .data(Constants.IMG_URL + coin.name.lowercase() + "-" + coin.symbol.lowercase() + "-logo.svg?v=002")
+                .data(coin.image)
                 .memoryCachePolicy(CachePolicy.DISABLED)
                 .build()
             imageLoader.enqueue(request)
